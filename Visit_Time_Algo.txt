@@ -1,0 +1,30 @@
+parent = 0 // First point
+visit_time = 0
+
+for row in df[1:]: // 2nd point onwards
+	
+	// If the point has geodist and tdiff less than threshold
+	if (row[geodist]<=geodist_threshold and row[tdiff]<= tdiff_threshold):
+
+		// Add tdiff to visit_time and drop that point
+
+		visit_time += row[tdiff]
+		df.drop(row)
+
+	// The point doesn't satisfy threshold
+	// Then it is part of the next staypoint
+	else:
+
+		// First take care of the current staypoint
+		// Current Staypoint has lesser visit_time than threshold then drop it
+		if visit_time < visit_threshold
+			df.drop(parent)
+
+		// Current staypoint has greater visit_time than threshold
+		// Assign the calculated visit_time to it
+		else:
+			df[parent][visit_time] = visit_time
+	
+		// Set this row to be the new staypoint under consideration
+		parent = row.index
+		visit_time = 0 
