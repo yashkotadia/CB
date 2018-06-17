@@ -1,0 +1,138 @@
+run(){
+	
+	load_dataset()
+
+	clean_dataset()
+
+	calculateDifference()
+
+	generate_SP()
+
+	tagging()
+
+	frequentAndInterested()
+
+}
+
+generate_SP(){
+
+	parent = 0 // First point
+	visit_time = 0
+
+	for row in df[1:]: // 2nd point onwards
+		
+		// If the point has geodist and tdiff less than threshold
+		if (row[geodist]<=geodist_threshold and row[tdiff]<= tdiff_threshold):
+
+			// Add tdiff to visit_time and drop that point
+
+			visit_time += row[tdiff]
+			df.drop(row)
+
+		// The point doesn't satisfy threshold
+		// Then it is part of the next staypoint
+		else:
+
+			// First take care of the current staypoint
+			// Current Staypoint has lesser visit_time than threshold then drop it
+			if visit_time < visit_threshold
+				df.drop(parent)
+
+			// Current staypoint has greater visit_time than threshold
+			// Assign the calculated visit_time to it
+			else:
+				df[parent][visit_time] = visit_time
+		
+			// Set this row to be the new staypoint under consideration
+			parent = row.index
+			visit_time = 0 
+}
+
+
+calculateDifference(){
+
+	// Calculate time difference and geographic distance between consecutive track points
+}
+
+
+tagging(){
+	
+	// Divide the data weekwise
+	// Since Home and Work places might differ across weeks
+	// Perform clustering on each week's data to identify Home and Work for each week
+
+	// To tag other places, use reverse geo-coding
+	getTag(lat, long)
+
+}
+
+getTag(lat, long){
+	
+	// Get a list of nearby places using Google Places API (arranged prominence wise)
+	// The result contains name of the place, address and tags as well
+	// Filter out useless tags. (Example: 'establishment', 'locality')
+
+	// Sift through the tags to decide the tag of SP
+
+	if checkMall(tags): return 'Mall'
+    elif checkHospital(tags): return 'Hospital'
+    elif checkPark(tags): return 'Park'
+    elif checkUniversity(tags): return 'University'
+    elif checkSchool(tags): return 'School'
+    else: return 'Unknown'
+
+}
+
+checkMall(tags){
+
+	// Assumes that in a mall, there ought to be many stores
+
+	threshold = 10
+	
+	mall_tags = ['store','clothing_store', 'electronics_store', 'home_goods_store', 'shoe_store', 'book_store', 'shopping_mall']
+
+	//if the tags have atleast threshold number of mall_tags then return True, else False
+
+}
+
+check Hospital(tags){
+	
+	// Generally there are many pharmacy and health related establishments near a hospitall
+
+	threshold = 4
+
+	hospital_tags = ['hospital', 'health', 'pharmacy']
+
+	//if the tags have atleast threshold number of hospital_tags then return True, else False
+}
+
+checkSchool(tags){
+	// If the first few tags contain 'School' then return True, else False
+}
+
+checkUniversity(tags){//Similar to check School}
+
+checkPark(tags){//Similar to checkSchool}
+
+frequentAndInterested(){
+	
+	// Do not consider staypoints tagged as 'Home' or 'Work'
+	
+	frequency_threshold = 0.05
+	time_threshold = 0.05
+
+	SP['frequent'] = False
+	SP['interested'] = False
+
+	form_clusters()
+
+	for i in cluster_id{
+
+		nVisits = number of staypoints within the cluster / Total Staypoints(Excluding H/W)
+		total_visit_time = sum of time spent during each SP / Total Time(Excluding H/W)
+
+		if nVisits>=frequency_threshold: SP[cluster_id==i]['frequent'] = True
+		if total_visit_time>=time_threshold: SP[cluster_id==i]['interested'] = True
+
+	}
+}
