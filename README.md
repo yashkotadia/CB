@@ -11,5 +11,3 @@ Ideally the proposed solution should work for any Indian setting. You can test i
 
 ### Implement
 [Raw_to_tag](https://github.com/yashkotadia/Extracting-Semantic-Information-from-Location-Data/blob/master/Raw_to_tag.ipynb) has the code.
-
-Main file Raw_to_Tag ipython notebook
